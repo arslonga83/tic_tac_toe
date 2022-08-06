@@ -1,5 +1,7 @@
+//Gameboard module
+
 const GameBoard = (() => {
-    let spaces = ['X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X'];
+    let spaces = ['', '', '', '', '', '', '', '', ''];
 
     function setupBoard() {
         for (i = 0; i < 9; i++) {
@@ -7,23 +9,57 @@ const GameBoard = (() => {
         }
     }
 
+    return {
+        spaces,
+        setupBoard,
+    }
+})()
+
+//factory function for players
+const playerFactory = (name, symbol) => {
+
+    const setName = () => name = prompt('name: ');
+
     function makeMove() {
         for (i = 0; i < 9; i++) {
             let index = i;
             document.getElementById('box' + i).addEventListener('click', () => {
-                spaces.splice(index, 1, 'test');
-                setupBoard();
+                GameBoard.spaces.splice(index, 1, this.symbol);
+                GameBoard.setupBoard();  
             })
         }
     }
+    return {name, symbol, setName, makeMove};
+};
 
-    return {
-        spaces,
-        setupBoard,
-        makeMove
+
+
+
+
+//playgame module
+const playGame = (() => {
+    const player1 = playerFactory('player1', 'X');
+    const player2 = playerFactory('player2', 'O');
+  
+
+    takeTurns();
+
+  function takeTurns() {
+    let turn = 'X';
+    if (turn === 'X') {
+        player1.makeMove();
+        turn = 'O';
+        console.log(turn);
     }
+    else if (turn === 'O') {
+        player2.makeMove();
+        turn = 'X';
+        console.log(turn);
+    }
+  }
+ 
+
 })()
 
 
-GameBoard.setupBoard();
-GameBoard.makeMove();
+
