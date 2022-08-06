@@ -20,23 +20,8 @@ const playerFactory = (name, symbol) => {
 
     const setName = () => name = prompt('name: ');
 
-    //function makeMove() {
-    //    for (i = 0; i < 9; i++) {
-    //        let index = i;
-    //        document.getElementById('box' + i).addEventListener('click', () => {
-    //            GameBoard.spaces.splice(index, 1, this.symbol);
-    //            GameBoard.setupBoard(); 
-    //            move += 1;
-    //            console.log(move);
-                
-    //        })
-    //    }
-   // }
     return {name, symbol, setName};
 };
-
-
-
 
 //playgame module
 const playGame = (() => {
