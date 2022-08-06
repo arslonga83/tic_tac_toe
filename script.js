@@ -46,29 +46,23 @@ const playGame = (() => {
 
     for (i = 0; i < 9; i++) {
         let index = i;
+        let square = document.getElementById('box' + i);
         
-        document.getElementById('box' + i).addEventListener('click', () => {
+        square.addEventListener('click', () => {
+            if (square.textContent !== "") {
+                return;
+            }
             if (move % 2 === 0) {
-                console.log(move)
                 GameBoard.spaces.splice(index, 1, player1.symbol); 
             }
             else {
-                console.log(move)
                 GameBoard.spaces.splice(index, 1, player2.symbol); 
             }
-
-            
-        
-        
-            
-                    GameBoard.setupBoard(); 
-                    move += 1;
-                    console.log(move);
-        
-
-                })
-
-}})()
+            GameBoard.setupBoard(); 
+            move += 1;
+        })
+    }
+})()
 
 
    
