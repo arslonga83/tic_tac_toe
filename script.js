@@ -10,8 +10,6 @@ const GameBoard = (() => {
     }
 
     function checkWin(symbol) {
-        console.log(spaces[0]);
-        console.log(spaces[3])
         if (spaces[0] === spaces[3] && spaces[3] === spaces[6] && spaces[6] === symbol ||
             spaces[1] === spaces[4] && spaces[4] === spaces[7] && spaces[7] === symbol ||
             spaces[2] === spaces[5] && spaces[5] === spaces[8] && spaces[8] === symbol ||
@@ -21,6 +19,7 @@ const GameBoard = (() => {
             spaces[0] === spaces[4] && spaces[4] === spaces[8] && spaces[8] === symbol ||
             spaces[2] === spaces[4] && spaces[4] === spaces[6] && spaces[6] === symbol)  {
             console.log(symbol + ' is the winner!')
+            return true;
         }
     }
 
@@ -30,26 +29,35 @@ const GameBoard = (() => {
        }
     }
 
+    function endRound(winner) {
+        console.log(winner + ' is the winner!');
+        if (prompt('play again?') === 'yes') {
+            spaces = ['', '', '', '', '', '', '', '', ''];
+            setupBoard();
+        }
+    }
+
     return {
         spaces,
         setupBoard,
         checkWin,
-        checkDraw
+        checkDraw,
+        endRound
     }
 })()
 
 //factory function for players
-const playerFactory = (name, symbol) => {
+const playerFactory = (name, symbol, winCount) => {
 
     const setName = () => name = prompt('name: ');
 
-    return {name, symbol, setName};
+    return {name, symbol, winCount, setName};
 };
 
 //playgame module
 const playGame = (() => {
-    const player1 = playerFactory('player1', 'X');
-    const player2 = playerFactory('player2', 'O');
+    const player1 = playerFactory('player1', 'X', 0);
+    const player2 = playerFactory('player2', 'O', 0);
     let move = 0;
 
     for (i = 0; i < 9; i++) {
@@ -63,15 +71,22 @@ const playGame = (() => {
             if (move % 2 === 0) {
                 GameBoard.spaces.splice(index, 1, player1.symbol);
                 GameBoard.setupBoard();
-                GameBoard.checkWin(player1.symbol); 
+                if (GameBoard.checkWin(player1.symbol) === true) {
+                    player1.winCount += 1;
+                    GameBoard.endRound(player1.name);
+                }
             }
             else {
                 GameBoard.spaces.splice(index, 1, player2.symbol); 
                 GameBoard.setupBoard();
-                GameBoard.checkWin(player2.symbol);
+                if (GameBoard.checkWin(player2.symbol) === true) {
+                    player2.winCount += 1;
+                    GameBoard.endRound(player2.name);
+                };
             }
             GameBoard.checkDraw();
             move += 1;
+            console.log(player1)
         })
     }
 })()
