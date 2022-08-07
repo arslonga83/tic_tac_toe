@@ -24,10 +24,17 @@ const GameBoard = (() => {
         }
     }
 
+    function checkDraw() {
+       if (spaces.includes("") === false) {
+        console.log('draw');
+       }
+    }
+
     return {
         spaces,
         setupBoard,
         checkWin,
+        checkDraw
     }
 })()
 
@@ -63,6 +70,7 @@ const playGame = (() => {
                 GameBoard.setupBoard();
                 GameBoard.checkWin(player2.symbol);
             }
+            GameBoard.checkDraw();
             move += 1;
         })
     }
