@@ -9,9 +9,25 @@ const GameBoard = (() => {
         }
     }
 
+    function checkWin(symbol) {
+        console.log(spaces[0]);
+        console.log(spaces[3])
+        if (spaces[0] === spaces[3] && spaces[3] === spaces[6] && spaces[6] === symbol ||
+            spaces[1] === spaces[4] && spaces[4] === spaces[7] && spaces[7] === symbol ||
+            spaces[2] === spaces[5] && spaces[5] === spaces[8] && spaces[8] === symbol ||
+            spaces[0] === spaces[1] && spaces[1] === spaces[2] && spaces[2] === symbol ||
+            spaces[3] === spaces[4] && spaces[4] === spaces[5] && spaces[5] === symbol ||
+            spaces[6] === spaces[7] && spaces[7] === spaces[8] && spaces[8] === symbol ||
+            spaces[0] === spaces[4] && spaces[4] === spaces[8] && spaces[8] === symbol ||
+            spaces[2] === spaces[4] && spaces[4] === spaces[6] && spaces[6] === symbol)  {
+            console.log(symbol + ' is the winner!')
+        }
+    }
+
     return {
         spaces,
         setupBoard,
+        checkWin,
     }
 })()
 
@@ -38,12 +54,15 @@ const playGame = (() => {
                 return;
             }
             if (move % 2 === 0) {
-                GameBoard.spaces.splice(index, 1, player1.symbol); 
+                GameBoard.spaces.splice(index, 1, player1.symbol);
+                GameBoard.setupBoard();
+                GameBoard.checkWin(player1.symbol); 
             }
             else {
                 GameBoard.spaces.splice(index, 1, player2.symbol); 
+                GameBoard.setupBoard();
+                GameBoard.checkWin(player2.symbol);
             }
-            GameBoard.setupBoard(); 
             move += 1;
         })
     }
