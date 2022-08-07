@@ -1,11 +1,10 @@
 //Gameboard module
-
 const GameBoard = (() => {
     let spaces = ['', '', '', '', '', '', '', '', ''];
 
     function setupBoard() {
         for (i = 0; i < 9; i++) {
-            document.getElementById('box' + i).textContent = spaces[i];
+            document.getElementById('box' + i).innerHTML = spaces[i];
         }
     }
 
@@ -18,7 +17,6 @@ const GameBoard = (() => {
             spaces[6] === spaces[7] && spaces[7] === spaces[8] && spaces[8] === symbol ||
             spaces[0] === spaces[4] && spaces[4] === spaces[8] && spaces[8] === symbol ||
             spaces[2] === spaces[4] && spaces[4] === spaces[6] && spaces[6] === symbol)  {
-            console.log(symbol + ' is the winner!')
             return true;
         }
     }
@@ -31,18 +29,28 @@ const GameBoard = (() => {
 
     function endRound(winner) {
         console.log(winner + ' is the winner!');
-        if (prompt('play again?') === 'yes') {
-            spaces = ['', '', '', '', '', '', '', '', ''];
-            setupBoard();
-        }
     }
+
+    function reset() {
+        spaces = ['', '', '', '', '', '', '', '', ''];
+        for (i = 0; i < 9; i++) {
+            document.getElementById('box' + i).innerHTML = "";
+        }
+        document.getElementById('reset').disabled = true;
+        move = 0;
+        index = 0;
+        playGame.playRound();
+    }
+    document.getElementById('reset').addEventListener('click', reset);
+
 
     return {
         spaces,
         setupBoard,
         checkWin,
         checkDraw,
-        endRound
+        endRound,
+        reset
     }
 })()
 
@@ -59,12 +67,14 @@ const playGame = (() => {
     const player1 = playerFactory('player1', 'X', 0);
     const player2 = playerFactory('player2', 'O', 0);
     let move = 0;
+    playRound();
 
+    function playRound() {
     for (i = 0; i < 9; i++) {
         let index = i;
         let square = document.getElementById('box' + i);
         
-        square.addEventListener('click', () => {
+        function click() {
             if (square.textContent !== "") {
                 return;
             }
@@ -74,6 +84,8 @@ const playGame = (() => {
                 if (GameBoard.checkWin(player1.symbol) === true) {
                     player1.winCount += 1;
                     GameBoard.endRound(player1.name);
+                    console.log('play again?');
+                    document.getElementById('reset').disabled = false;
                 }
             }
             else {
@@ -84,12 +96,18 @@ const playGame = (() => {
                     GameBoard.endRound(player2.name);
                 };
             }
+            
             GameBoard.checkDraw();
             move += 1;
-            console.log(player1)
-        })
-    }
-})()
+        }
+        square.addEventListener('click', click);
+    }}
+    return {
+        playRound,
+        move,
+}
+}
+)()
 
 
    
