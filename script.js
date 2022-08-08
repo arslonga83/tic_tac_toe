@@ -24,22 +24,25 @@ const GameBoard = (() => {
     function checkDraw() {
        if (spaces.includes("") === false) {
         console.log('draw');
+        console.log('play again?');
+        document.getElementById('reset').disabled = false;
+        document.getElementById('grid-container').outerHTML = document.getElementById('grid-container').outerHTML;
        }
     }
 
     function endRound(winner) {
         console.log(winner + ' is the winner!');
+        console.log('play again?');
+        document.getElementById('reset').disabled = false;
+        document.getElementById('grid-container').outerHTML = document.getElementById('grid-container').outerHTML;
     }
 
     function reset() {
-        spaces = ['', '', '', '', '', '', '', '', ''];
         for (i = 0; i < 9; i++) {
             document.getElementById('box' + i).innerHTML = "";
         }
         document.getElementById('reset').disabled = true;
-        move = 0;
-        index = 0;
-        playGame.playRound();
+        location.reload();
     }
     document.getElementById('reset').addEventListener('click', reset);
 
@@ -55,17 +58,17 @@ const GameBoard = (() => {
 })()
 
 //factory function for players
-const playerFactory = (name, symbol, winCount) => {
+const playerFactory = (name, symbol) => {
 
     const setName = () => name = prompt('name: ');
 
-    return {name, symbol, winCount, setName};
+    return {name, symbol, setName};
 };
 
 //playgame module
 const playGame = (() => {
-    const player1 = playerFactory('player1', 'X', 0);
-    const player2 = playerFactory('player2', 'O', 0);
+    const player1 = playerFactory('player1', 'X');
+    const player2 = playerFactory('player2', 'O');
     let move = 0;
     playRound();
 
@@ -81,23 +84,19 @@ const playGame = (() => {
             if (move % 2 === 0) {
                 GameBoard.spaces.splice(index, 1, player1.symbol);
                 GameBoard.setupBoard();
+                GameBoard.checkDraw();
                 if (GameBoard.checkWin(player1.symbol) === true) {
-                    player1.winCount += 1;
                     GameBoard.endRound(player1.name);
-                    console.log('play again?');
-                    document.getElementById('reset').disabled = false;
                 }
             }
             else {
                 GameBoard.spaces.splice(index, 1, player2.symbol); 
                 GameBoard.setupBoard();
+                GameBoard.checkDraw();
                 if (GameBoard.checkWin(player2.symbol) === true) {
-                    player2.winCount += 1;
                     GameBoard.endRound(player2.name);
                 };
             }
-            
-            GameBoard.checkDraw();
             move += 1;
         }
         square.addEventListener('click', click);
