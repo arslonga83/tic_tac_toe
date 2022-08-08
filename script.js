@@ -104,10 +104,17 @@ const playGame = (() => {
             }
             display.status.innerHTML = player1.name + ' goes first...';
             document.getElementById('popup').style.display = 'none';
+            if (player2.name === 'computer') {
+                playComputer();
+            }
+            else {
+            playRound();
+            }
         })
 
     let move = 0;
-    playRound();
+    console.log(player2.name)
+    
 
     function playRound() {
         for (i = 0; i < 9; i++) {
@@ -142,12 +149,44 @@ const playGame = (() => {
         }
         square.addEventListener('click', click);
     }}
+
+    function playComputer() {
+        for (i = 0; i < 9; i++) {
+            let index = i;
+            let square = document.getElementById('box' + i);
+                square.addEventListener('click', () => {
+                if (square.textContent !== "") {
+                    return;
+                }
+                    GameBoard.spaces.splice(index, 1, player1.symbol);
+                    GameBoard.setupBoard();
+                    
+                
+                    GameBoard.checkDraw();
+                    if (GameBoard.checkWin(player1.symbol) === true) {
+                        GameBoard.endRound(player1.name);
+                    }
+                    GameBoard.spaces.splice(Math.floor(Math.random() * 10), 1, player2.symbol);
+                    GameBoard.setupBoard();
+                    GameBoard.checkDraw();
+                    if (GameBoard.checkWin(player2.symbol) === true) {
+                        GameBoard.endRound(player2.name);
+                    };
+                })
+                move += 1;
+            }
+
+        
+    
+
+
     return {
         playRound,
         move,
+        playComputer
 }
 }
-)()
+})()
 
 
    
