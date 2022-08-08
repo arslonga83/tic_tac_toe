@@ -44,7 +44,6 @@ const GameBoard = (() => {
     }
     document.getElementById('reset').addEventListener('click', reset);
 
-
     return {
         spaces,
         setupBoard,
@@ -65,8 +64,19 @@ const playerFactory = (name, symbol) => {
 
 const display = (() => {
     const status = document.getElementById('status');
+    
+
+    function getNames() {
+        const submitButton = document.getElementById('submit');
+        submitButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            player1.name = document.getElementById('player1').value;
+            player2.name = document.getElementById('player2').value;
+        })
+    }
     return {
-        status
+        status, 
+        getNames
     }
 })()
 
@@ -74,13 +84,26 @@ const display = (() => {
 const playGame = (() => {
     const player1 = playerFactory('player1', 'X');
     const player2 = playerFactory('player2', 'O');
-    player1.name = prompt('name:');
-    player2.name = prompt('name:');
+    
+    const newGameButton = document.getElementById('new-game');
+        newGameButton.addEventListener('click', (e) => {
+        document.getElementById('popup').style.display = 'grid';
+        newGameButton.remove()
+        })
+    
+    const submitButton = document.getElementById('submit');
+        submitButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            player1.name = document.getElementById('player1').value;
+            player2.name = document.getElementById('player2').value;
+            display.status.innerHTML = player1.name + ' goes first...';
+            document.getElementById('popup').style.display = 'none';
+        })
+
     let move = 0;
     playRound();
 
     function playRound() {
-        display.status.innerHTML = player1.name + ' goes first...';
         for (i = 0; i < 9; i++) {
         let index = i;
         let square = document.getElementById('box' + i);

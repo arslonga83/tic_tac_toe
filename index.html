@@ -9,8 +9,19 @@
 </head>
 <body>
     <h1>Let's Play Tic-Tac-Toe!</h1>
-    <h2 id="status">Player 1 goes first...</h2>
+    <h2 id="status"></h2>
+    <button id="new-game">NEW GAME</button>
     <div class="main-area">
+        <div id="popup">
+            <form action="" id="form">
+                <h2>Who's Playing?</h2>
+                    <label for="player1">Player 1:</label>
+                    <input type="text" id="player1">
+                    <label for="player2">Player 2:</label>
+                    <input type="text" id="player2">
+                <button type="submit" id="submit">Submit</button>
+            </form>
+        </div>
         <div id="grid-container" class="grid-container">
             <div id="box0" class="box"></div>
             <div id="box1" class="box"></div>
