@@ -104,7 +104,7 @@ const playGame = (() => {
             }
             display.status.innerHTML = player1.name + ' goes first...';
             document.getElementById('popup').style.display = 'none';
-            if (player2.name === 'computer') {
+            if (player2.name === 'Computer') {
                 playComputer();
             }
             else {
@@ -113,8 +113,6 @@ const playGame = (() => {
         })
 
     let move = 0;
-    console.log(player2.name)
-    
 
     function playRound() {
         for (i = 0; i < 9; i++) {
@@ -128,7 +126,6 @@ const playGame = (() => {
             if (move % 2 === 0) {
                 GameBoard.spaces.splice(index, 1, player1.symbol);
                 GameBoard.setupBoard();
-                
                 display.status.innerHTML = player2.name + '\'s turn';
                 GameBoard.checkDraw();
                 if (GameBoard.checkWin(player1.symbol) === true) {
@@ -138,7 +135,6 @@ const playGame = (() => {
             else {
                 GameBoard.spaces.splice(index, 1, player2.symbol); 
                 GameBoard.setupBoard();
-                
                 display.status.innerHTML = player1.name + '\'s turn';
                 GameBoard.checkDraw();
                 if (GameBoard.checkWin(player2.symbol) === true) {
@@ -155,18 +151,22 @@ const playGame = (() => {
             let index = i;
             let square = document.getElementById('box' + i);
                 square.addEventListener('click', () => {
-                if (square.textContent !== "") {
+                if (square.textContent !== "") { //check square is empty
                     return;
                 }
-                    GameBoard.spaces.splice(index, 1, player1.symbol);
+                    GameBoard.spaces.splice(index, 1, player1.symbol); //player move
                     GameBoard.setupBoard();
-                    
-                
                     GameBoard.checkDraw();
                     if (GameBoard.checkWin(player1.symbol) === true) {
                         GameBoard.endRound(player1.name);
                     }
-                    GameBoard.spaces.splice(Math.floor(Math.random() * 10), 1, player2.symbol);
+                    for (i = 0; i < 100; i++) {
+                        let computerMove = Math.floor(Math.random() * 10); //computer move
+                        if (GameBoard.spaces[computerMove] === "") {
+                            GameBoard.spaces.splice(computerMove, 1, player2.symbol);
+                            break;
+                        }
+                    }
                     GameBoard.setupBoard();
                     GameBoard.checkDraw();
                     if (GameBoard.checkWin(player2.symbol) === true) {
@@ -175,11 +175,6 @@ const playGame = (() => {
                 })
                 move += 1;
             }
-
-        
-    
-
-
     return {
         playRound,
         move,
