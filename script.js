@@ -23,7 +23,7 @@ const GameBoard = (() => {
 
     function checkDraw() {
        if (spaces.includes("") === false) {
-        display.status.innerHTML = 'It\'s a draw. Play again?'
+        display.status.innerHTML = 'It\'s a draw. Click reset button to play again.';
         document.getElementById('reset').disabled = false;
         document.getElementById('grid-container').outerHTML = document.getElementById('grid-container').outerHTML;
        }
@@ -95,7 +95,13 @@ const playGame = (() => {
         submitButton.addEventListener('click', (e) => {
             e.preventDefault();
             player1.name = document.getElementById('player1').value;
+            if (player1.name === "") {
+                player1.name = 'Player 1'
+            }
             player2.name = document.getElementById('player2').value;
+            if (player2.name === "") {
+                player2.name = 'Player 2'
+            }
             display.status.innerHTML = player1.name + ' goes first...';
             document.getElementById('popup').style.display = 'none';
         })
