@@ -90,4 +90,8 @@ input {
     background-color: lightblue
 }
 
+button:disabled {
+    background-color: lightslategrey;
+}
+
 
