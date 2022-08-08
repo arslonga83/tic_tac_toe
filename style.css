@@ -1,13 +1,57 @@
-div {
-    border: 1px solid black;
-    display: grid;
-    grid-template-columns: repeat(3, 200px);
-    grid-template-rows: repeat(3, 200px);
+body {
+    text-align: center;
+    background-color: lightskyblue;
+    font-family: sans-serif;
 }
 
-div div {
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+h1 {
+    font-size: 48px;
+}
+
+.main-area {
+    display: flex;
+    justify-content: space-around;
+    padding: 24px;
+}
+.grid-container  {
+    
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.box {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 72px;
+}
+
+#box0, #box1, #box2, #box3, #box4, #box5 {
+    border-bottom: 8px solid black;
+}
+
+#box0, #box1, #box3, #box4, #box6, #box7 {
+    border-right: 8px solid black;
+}
+
+button {
+    padding: 8px;
+    background-color: white;
+    color: black;
+    font-family: sans-serif;
+    font-size: 24px;
+}
+
+button:hover {
+    background-color: lightblue;
 }
