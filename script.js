@@ -64,7 +64,6 @@ const playerFactory = (name, symbol) => {
 
 const display = (() => {
     const status = document.getElementById('status');
-    
 
     function getNames() {
         const submitButton = document.getElementById('submit');
@@ -85,11 +84,11 @@ const playGame = (() => {
     const player1 = playerFactory('player1', 'X');
     const player2 = playerFactory('player2', 'O');
     
-    const newGameButton = document.getElementById('new-game');
-        newGameButton.addEventListener('click', (e) => {
-        document.getElementById('popup').style.display = 'grid';
-        newGameButton.remove()
-        })
+    //const newGameButton = document.getElementById('new-game');
+        //newGameButton.addEventListener('click', (e) => {
+        //document.getElementById('popup').style.display = 'grid';
+        //newGameButton.remove()
+        //})
     
     const submitButton = document.getElementById('submit');
         submitButton.addEventListener('click', (e) => {
@@ -102,7 +101,7 @@ const playGame = (() => {
             if (player2.name === "") {
                 player2.name = 'Player 2'
             }
-            display.status.innerHTML = player1.name + ' goes first...';
+            //display.status.innerHTML = player1.name + ' goes first...';
             document.getElementById('popup').style.display = 'none';
             if (player2.name === 'Computer') {
                 playComputer();
@@ -115,6 +114,7 @@ const playGame = (() => {
     let move = 0;
 
     function playRound() {
+        display.status.innerHTML = player1.name + ' goes first...';
         for (i = 0; i < 9; i++) {
         let index = i;
         let square = document.getElementById('box' + i);
@@ -159,7 +159,8 @@ const playGame = (() => {
                     GameBoard.checkDraw();
                     if (GameBoard.checkWin(player1.symbol) === true) {
                         GameBoard.endRound(player1.name);
-                    }
+                        return;
+                    };
                     for (i = 0; i < 100; i++) {
                         let computerMove = Math.floor(Math.random() * 10); //computer move
                         if (GameBoard.spaces[computerMove] === "") {
@@ -167,10 +168,10 @@ const playGame = (() => {
                             break;
                         }
                     }
-                    GameBoard.setupBoard();
+                    setTimeout(GameBoard.setupBoard, 1000);
                     GameBoard.checkDraw();
                     if (GameBoard.checkWin(player2.symbol) === true) {
-                        GameBoard.endRound(player2.name);
+                        setTimeout(GameBoard.endRound, 1000, player2.name);
                     };
                 })
                 move += 1;
@@ -185,3 +186,6 @@ const playGame = (() => {
 
 
    
+
+//computer moves are delayed but not the win announcement
+//buttons are not centered...?

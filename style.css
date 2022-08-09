@@ -57,8 +57,7 @@ button:hover {
 }
 
 #popup {
-    display: none;
-    
+    display: grid;
     position: absolute;
     z-index: 9;
     border: 2px solid black;
@@ -68,6 +67,8 @@ button:hover {
     padding-right: 36px;
     padding-left: 36px;
     font-size: 18px;
+    width: 400px;
+    height: 475px;
 }
 
 form {
